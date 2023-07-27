@@ -1,0 +1,8 @@
+body{
+    background-color: beige;
+}
+section, article, .lista{
+    border: 1px solid burlywood;
+    padding: 5px;
+    margin: 3px
+}

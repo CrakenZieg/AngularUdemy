@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/modernizr-custom.js"></script>
+    <script src="js/jquery-3.7.0.js"></script>
+    <script src="js/app.js"></script>
+<!-- Comprobamos que el navegador es compatible con draganddrop y FileList mediante modernizr -->
+    <script>
+        $(document).ready(function(){
+            if(Modernizr.filereader && window.FileList){
+                //alert("Se soportan FileList y DragAndDrop");
+            } else {
+                //alert("No se soportan FileList y DragAndDrop");
+            }
+// Cuando cambie el estado del elemento #archivo llamamos a la funcion que seleccionara el primer
+// elemento de la lista de archivos y su nombre
+            $("#archivo").change(manejoDeArchivo);
+            function manejoDeArchivo(evento){
+                let archivo = evento.target.files[0];
+                let info = "<p>Nombre: "+archivo.name+", tamaño: "+archivo.size
+                        +", tipo MIME: "+archivo.type+"</p>";
+                $("#salidaArchivo").append(info);
+    
+                if(archivo.type==="text/plain"){ //si es texto:               
+                    let reader = new FileReader(); //lector de archivos
+                    reader.onload = function(evento){ //funcion que se activa al leer un archivo
+                        let resultadoTexto = evento.target.result; //crearemos una variable con el contenido
+                        $("#salidaArchivoArea").append(resultadoTexto); //la asignaremos a un elemento html
+                    };
+                    reader.readAsText(archivo); //va a leer el archivo como de texto 
+    
+                } else if(archivo.type.match('image.*')){ //si es imagen
+                    let reader = new FileReader(); //lector de archivos
+                    reader.onload = function(evento){ //funcion que se activa al leer un archivo
+                        let img = new Image(); //creamos una variable de tipo Image
+                        img.src = evento.target.result; //le asignamos el contenido
+                        $("#salidaImagen").append(img); //lo asignamos a un elemento html
+                    };
+                    reader.readAsDataURL(archivo); //Va a leer el archivo como un string en base 64
+                }        
+            }
+        });
+    </script>
+    <title>Lectura de Archivos</title>
+</head>
+<!-- Para el manejo de archivos utilizamos el fileApi que permite su manejo y 
+    el acceso a sus datos. Lo haremos usando inputs de type='file' y drag and drop
+    que son parte de DataTransfer.
+
+    Hay varias interfaces para trabajar con archivos de manera local:
+
+    -Blob -> representa cualquier archivo y nos permite saber tamaño, tipo, slice(), etc
+    -File -> el archivo en si, podemos acceder al nombre, modificacion, etc
+    -FileList -> lista de archivos
+    -FileReader -> permite leer el contenido
+    -FileError -> para errores de tipo asincrono
+    -FileException -> para errores en el acceso asincrono a archivos
+
+    Podemos leer el contenido el archivos de varias maneras:
+
+    -TextData: readAsText() lo lee como texto (UTP-8)
+
+    -Data: //URL:readAsDataURL() lee el contenido como url codificada, para imagenes generalmente
+
+    -BinaryData: readAsBinaryString() para leer formatos propietarios como doc, xlr, etc (ni idea por ahora)
+    *lo deprecaron y reintrodujeron por compatibilidad, se recomienda usar readAsArrayBuffer()
+
+    -ArrayBuffer: readAsArrayBuffer()
+-->
+<body>
+    <header>
+        <h1>Selección de archivos en HTML5</h1>
+    </header>
+    <section>
+        <article>
+            <fieldset>
+                <legend>Un archivo solo</legend>
+                <form>
+                    <label for="archivo">Selecciona un archivo</label>
+                    <input type="file" name="archivo" id="archivo">
+                    <hr>
+                    <div id="salidaArchivo"></div>
+                    <hr>
+                    <p>Contendio del archivo de texto:</p>
+                    <textarea cols="100" rows="10" id="salidaArchivoArea"></textarea>    
+                    <hr>
+                    <p>Contendio del archivo de imagen:</p>
+                    <div id="salidaImagen"></div>              
+                </form>
+            </fieldset>
+        </article>        
+    </section>
+</body>
+</html>

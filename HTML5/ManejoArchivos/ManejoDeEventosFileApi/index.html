@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/modernizr-custom.js"></script>
+    <script src="js/jquery-3.7.0.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        $(document).ready(function(){
+            if(Modernizr.filereader && window.FileList){} else {}
+            let archivo = null;
+            let reader = null;
+
+            $("#archivo").change(manejoArchivo);
+            $("#iniciarLectura").click(iniciarLectura);
+            $("#detenerLectura").click(iniciarLectura);
+
+            function reiniciarValores(){
+                $("#progreso").empty();
+                $("#leyendo").text(0);
+                $("#progressBar").val(0);
+            }
+
+            function manejoArchivo(evento){
+                reiniciarValores();
+                archivo = evento.target.files[0];
+                $("#nombre_archivo").html(archivo.name+", tamaño: "+archivo.size);
+            }
+
+            function iniciarLectura(evento){
+                reiniciarValores();
+                if(archivo!=null){
+                    reader = new FileReader(evento);
+                //Evento onloadstart
+                    reader.onloadstart = function(evento){
+                        $("#progreso").append("<p>Inició la lectura del archivo (onloadstart)</p>");
+                    }
+                //Evento onloadend
+                    reader.onloadend = function(evento){
+                        $("#progreso").append("<p>Terminó la lectura del archivo (onloadend)</p>");
+                    }
+                //Evento onload
+                    reader.onload = function(evento){
+                        $("#contador").append("<p>Lectura del archivo al 100% (onload)</p>");
+                        $("#progreso").append("<p>Lectura del archivo completada (onload)</p>");
+                    }
+                //Evento onprogress
+                    reader.onprogress = function(evento){
+                        if(evento.lengthComputable){
+                            let calculo = Math.round((evento.loaded/evento.total)*100);
+                            $("#leyendo").text(calculo);
+                            $("#progressBar").val(calculo);
+                        }
+                    }
+                //Evento onerror
+                    reader.onerror = function(evento){                            
+                        $("#progreso").append("<p>Ocurrió un error con la lectura del archivo (onerror)</p>");
+                    }
+                //Evento onabort
+                    reader.onabort = function(evento){                            
+                        $("#progreso").append("<p>La lectura se abortó (onabort)</p>");
+                    }
+                reader.readAsBinaryString(archivo);
+                } else {
+                    alert("Debes seleccionar un archivo");
+                }
+            }
+
+            function detenerLectura(){
+                if(reader){
+                    reader.abort();
+                }
+            }
+        });
+
+    </script>
+    <title>Manejo de eventos con Archivos</title>
+</head>
+<!-- Para el manejo de archivos utilizamos el fileApi que permite su manejo y 
+    el acceso a sus datos. Lo haremos usando inputs de type='file' y drag and drop
+    que son parte de DataTransfer.
+
+    Hay varias interfaces para trabajar con archivos de manera local:
+
+    -Blob -> representa cualquier archivo y nos permite saber tamaño, tipo, slice(), etc
+    -File -> el archivo en si, podemos acceder al nombre, modificacion, etc
+    -FileList -> lista de archivos
+    -FileReader -> permite leer el contenido
+    -FileError -> para errores de tipo asincrono
+    -FileException -> para errores en el acceso asincrono a archivos
+
+    Podemos leer el contenido el archivos de varias maneras:
+
+    -TextData: readAsText() lo lee como texto (UTP-8)
+
+    -Data: //URL:readAsDataURL() lee el contenido como url codificada, para imagenes generalmente
+
+    -BinaryData: readAsBinaryString() para leer formatos propietarios como doc, xlr, etc (ni idea por ahora)
+    *lo deprecaron y reintrodujeron por compatibilidad, se recomienda usar readAsArrayBuffer()
+
+    -ArrayBuffer: readAsArrayBuffer()
+-->
+<body>
+    <header>
+        <h1>Selección de archivos en HTML5</h1>
+    </header>
+    <section>
+        <article>
+            <fieldset>
+                <legend>Un archivo solo</legend>
+                <form>
+                    <label for="archivo">Selecciona un archivo</label>
+                    <input type="file" name="archivo" id="archivo">                                
+                </form>
+                <hr>
+                <p>Nombre del archivo: <span id="nombre_archivo"></span></p>
+                <p>Leer el contenido del archivo:</p>
+                <button id="iniciarLectura">Iniciar lectura</button>
+                <button id="detenerLectura">Detener lectura</button>
+                <hr>
+                <p>Progreso de la lectura: <span id="leyendo"></span>%</p>
+                <progress id="progressBar" valur="0" max="100"></progress>
+                <div id="progreso"></div>
+            </fieldset>
+        </article>        
+    </section>
+</body>
+</html>

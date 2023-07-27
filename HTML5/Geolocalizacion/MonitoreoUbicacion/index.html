@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/jquery-3.7.0.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+// no compruebo con Modernizr para ahorrar tiempo ya que lo voy a correr con chrome
+        $(document).ready(function(){
+// navigator representa al dispositivo
+// watchPosition() permite agregar varios parametros, incluyendo recuperar la posicion, mostrar el error
+// y un arreglo de opciones -> 
+// maximumAge: duracion de monitoreo; 
+// timeout: duracion de la espera; 
+// enableHighAccuracy: nivel de exactitud
+            navigator.geolocation.watchPosition(mostrarCoordenadas, mostrarErrores,
+            {maximumAge:1000,timeout:300000,enableHighAccuracy:true});
+            function mostrarCoordenadas(posicion){
+                let latitud = posicion.coords.latitude;
+                let longitud = posicion.coords.longitude;
+                $("#resultado").append("<p>Latitud: "+latitud+"</p><p>longitud: "+longitud+"</p>");
+            }
+            function mostrarErrores(error){
+                switch(error.code){
+                    case error.PERMISSION_DENIED:
+                        alert("Permiso de geolocalización denegado");
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        alert("No se pudo recuperar la geolocalización");
+                        break;
+                    case error.TIMEOUT:
+                        alert("Tiempo de espera agotado");
+                        break;
+                    default:
+                        alert("Error de geolocalizaci´n desconocido: "+error.code);
+                }
+            }
+        });
+    </script>
+    <title>Deteccion</title>
+</head>
+<body>
+    <h1>Deteccion de geolocalización</h1>
+    <div id="resultado"></div>
+</body>
+</html>

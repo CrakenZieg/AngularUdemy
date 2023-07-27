@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/modernizr-custom.js"></script>
+    <script src="js/jquery-3.7.0.js"></script>
+    <script src="js/app.js"></script>
+<!-- Comprobamos que el navegador es compatible con draganddrop y FileList mediante modernizr -->
+    <script>
+        $(document).ready(function(){
+            if(Modernizr.filereader && window.FileList){
+                alert("Se soportan FileList y DragAndDrop");
+            } else {
+                alert("No se soportan FileList y DragAndDrop");
+            }
+// Cuando cambie el estado del elemento #archivo llamamos a la funcion que seleccionara el primer
+// elemento de la lista de archivos y su nombre
+            $("#archivo").change(manejoDeArchivo);
+            function manejoDeArchivo(evento){
+                let archivo = evento.target.files[0];
+                let info = "<p>Nombre: "+archivo.name+", tamaño: "+archivo.size
+                        +", tipo MIME: "+archivo.type+"</p>";
+                $("#salidaArchivoUnico").append(info);
+            }
+            $("#archivos").change(manejoDeArchivos);
+            function manejoDeArchivos(evento){
+                let archivos = evento.target.files;
+                for(let i=0; i<archivos.length; i++){
+                    let info = "<p>"+(i+1)+") Nombre: "+archivos[i].name+", tamaño: "+archivos[i].size
+                        +", tipo MIME: "+archivos[i].type+"</p>";
+                    $("#salidaArchivos").append(info);
+                }
+            }
+// bindeamos al div #draganddrop los eventos drop y dragover y les asociamos metodos que los manejen
+            $("#draganddrop").bind({
+                "drop":manejoDrop, //maneja el drop
+                "dragover":manejoDragOver //maneja el arrastre
+            });
+// se agregan siempre estas lineas de codigo para evitar que el comportamiento por default (abrir) del navegador 
+// nos impida poder recuperar los archivos
+            function manejoDragOver(evento){
+                evento.stopPropagation();
+                evento.preventDefault();
+            }
+            function manejoDrop(evento){
+                evento.stopPropagation();
+                evento.preventDefault();
+// jquery wrappea el evento original y necesitamos recuperarlo, si no esta envuelto lo recuperamos 
+// O recuperamos el envuelto por Jquery
+                let dataTransfer = evento.dataTransfer || (evento.originalEvent && evento.originalEvent.dataTransfer);
+                let archivos = evento.target.files || (dataTransfer && dataTransfer.files);
+        //limpiamos la salida
+                $("#salidaDragAndDrop").html("");
+        //recuperamos y agregamos a la salida
+                for(let i=0; i<archivos.length; i++){
+                    let info = "<p>"+(i+1)+") Nombre: "+archivos[i].name+", tamaño: "+archivos[i].size
+                        +", tipo MIME: "+archivos[i].type+"</p>";
+                    $("#salidaDragAndDrop").append(info);
+                }
+            }
+        });
+    </script>
+    <title>Manejo de Archivos</title>
+</head>
+<!-- Para el manejo de archivos utilizamos el fileApi que permite su manejo y 
+    el acceso a sus datos. Lo haremos usando inputs de type='file' y drag and drop
+    que son parte de DataTransfer.
+
+    Hay varias interfaces para trabajar con archivos de manera local:
+
+    -Blob -> representa cualquier archivo y nos permite saber tamaño, tipo, slice(), etc
+    -File -> el archivo en si, podemos acceder al nombre, modificacion, etc
+    -FileList -> lista de archivos
+    -FileReader -> permite leer el contenido
+    -FileError -> para errores de tipo asincrono
+    -FileException -> para errores en el acceso asincrono a archivos
+
+    Podemos leer el contenido el archivos de varias maneras:
+
+    -TextData: readAsText() lo lee como texto (UTP-8)
+
+    -Data: //URL:readAsDataURL() lee el contenido como url codificada, para imagenes generalmente
+
+    -BinaryData: readAsBinaryString() para leer formatos propietarios como doc, xlr, etc (ni idea por ahora)
+    *lo deprecaron y reintrodujeron por compatibilidad, se recomienda usar readAsArrayBuffer()
+
+    -ArrayBuffer: readAsArrayBuffer()
+-->
+<body>
+    <header>
+        <h1>Selección de archivos en HTML5</h1>
+    </header>
+    <section>
+        <article>
+            <fieldset>
+                <legend>Un archivo solo</legend>
+                <form>
+                    <label for="archivo">Selecciona un archivo</label>
+                    <input type="file" name="archivo" id="archivo">
+                    <div id="salidaArchivoUnico"></div>
+                </form>
+            </fieldset>
+        </article>
+        <article>
+            <fieldset>
+                <legend>Varios archivos</legend>
+                <form>
+                    <label for="archivos">Selecciona un archivo</label>
+<!-- el atributo multiple del elemento input permite justamente agregar multiples archivos -->
+                    <input type="file" name="archivos" id="archivos" multiple>
+                    <div id="salidaArchivos"></div>
+                </form>
+            </fieldset>
+        </article>
+        <article>
+            <fieldset>
+                <legend>Drag and Drop</legend>
+                <form>
+                    <h4>Arrastra los archivos hasta aquí</h4>
+<!-- el atributo multiple del elemento input permite justamente agregar multiples archivos -->
+                    <div id="draganddrop"></div>
+                    <div id="salidaDragAndDrop"></div>
+                </form>
+            </fieldset>
+        </article>
+    </section>
+</body>
+</html>

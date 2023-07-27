@@ -1,0 +1,62 @@
+header, nav, section, article, aside, footer {
+    display: block;
+    background-color: aliceblue;
+    padding: 3px;
+    margin: 5px;
+    border: 1px solid black;
+}
+
+.body{
+    display: flex;
+}
+
+nav{
+    width: 20%;
+    height: auto;
+    float: left;
+}
+
+.sections{
+    width: 80%;
+    height: auto;
+    float: right;
+}
+
+section{
+    display: flex;
+    flex-direction: column;
+    width: 97%;
+    float: right;
+}
+section h2{
+    display:block;
+}
+
+.articlesAside{
+    display: flex;
+}
+
+article{
+    background-color: cornflowerblue;
+    display:block;
+}
+
+.articles{
+    width: 80%;
+    float: left;
+}
+
+aside{
+    width: 18%;
+    height: auto;
+    float: right;
+}
+
+footer{
+/* 
+    clear permite que el elemento 'evite' elementos flotantes a izquierda y derecha
+    de no usar este atributo, footer solo es block, por lo que directamente debajo 
+    del header con el nav y las section tapandolo
+*/
+    clear: both;
+}

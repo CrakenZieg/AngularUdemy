@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/jquery-3.7.0.js"></script>
+    <script src="js/modernizr-custom.js"></script>
+    <script src="js/app.js"></script>
+    <script type="text/javascript">
+
+        if (Modernizr.localstorage) {
+            $(document).ready(function(){
+                $("#lista").blur(function(){
+                    localStorage.setItem("listado",$("#lista").html());
+                    sessionStorage.setItem("listado",$("#lista").html());
+                    location.reload();
+                });
+                if(localStorage.getItem("listado")){
+                    $("#mensajeLocal").html("<h3>Datos almacenados en localStorage</h3>");
+                    $("#lista").html(localStorage.getItem("listado"));
+                    $("#resultadoLocal").text(localStorage.getItem("listado"));
+                } else {
+                    $("#mensajeLocal").html("<h3>No hay datos almacenados en localStorage</h3>");
+                }
+                $("#limpiarLocal").click(function(){            
+                localStorage.removeItem("listado")
+                location.reload();           
+                });  
+                if(sessionStorage.getItem("listado")){
+                    $("#mensajeSession").html("<h3>Datos almacenados en sessionStorage</h3>");
+                    $("#resultadoSession").text(sessionStorage.getItem("listado"));
+                } else {
+                    $("#mensajeSession").html("<h3>No hay datos almacenados en sessionStorage</h3>");
+                }
+                $("#limpiarSession").click(function(){            
+                sessionStorage.removeItem("listado")
+                location.reload();           
+                });
+                window.addEventListener("storage",escucharEvento,false);
+                function escucharEvento(e){
+                    alert("Evento generando localStorage: "+e.storageArea.listado);
+                }
+            });            
+        } else {
+            alert("El navegador no soporta LocalStorage");
+        };            
+    </script>
+    <title>Almacenamiento</title>
+</head>
+<!-- HTTP es un protocolo sin memoria, por lo tanto mediante cookies se lograba
+    'persistir' datos de sesion, entre los problemas de las cookies están que 
+    solo almacenan 4kb y que se envian en cada peticion http, por lo que son 
+    susceptibles de intercepcion.
+    
+    Con HTML5 podemos recordar informacion sin conectarnos al servidor e incluso
+    sin conexion a internet, para trabajar de manera offline. Podemos seguir 
+    utilizando la aplicacion y sincronizarnos al recuperar la conexion.
+
+    Existen 4 formas de almacenamiento en HTML5:
+
+    -Local Storage: de 5mb a 10mb dependiendo del navegador, se almacena de manera 
+    'permanente'.
+
+    -Session Storage: almacena informacion unicamente mientras la ventana esta
+    abierta, para otra ventana se crea otra sesion (y otro storage)
+
+    -WebSQL: discontinuado
+
+    -IndexeqDB: DDBB no relacional que almacena datos de forma jerarquica, la
+    soportan chrome, firefox y microsoft.
+
+    ->Offline Applications: como complemento a las anteriores, debemos declarar un
+    archivo ApplicationCacheManifest que indica los archivos necesarios para 
+    almaenar de manera local el navegador mientras no haya conexion a internet.
+    
+    El archivo contiene 3 partes:
+
+    1) Cache: indica archivos, imagenes, .css, .js y todo lo necesario para trabajar
+    offline.
+    2) Network: indica todos los recursos que si deben consultarse mediante internet
+    3) Fallback: indica los archivos que se cambian cuando hay o no internet, por
+    ejemplo indicando al usuario de funcionalidades reducidas por perdida de conexion.
+-->
+<body>
+    <header>
+<!-- 
+CACHE MANIFEST
+
+**Indicamos que necesita la aplicacion para funcionar offline**
+CACHE:        
+index.html
+js/jquery-3.7.0.js
+js/modernizr-custom.js
+js/app.js
+css/styles.css
+images/logotipo_offline.png
+
+**Indicamos que recursos debe reemplazar el navegador en caso de perdida de conexion**
+FALLBACK:
+images/logotipo.png images/logotipo_offline.png 
+
+Para verlo en practica deberiamos levantar la web en un servidor, y desconectarnos, 
+cosa dificil usando localHost
+-->
+        <img src="images/logotipo.png" alt="Logo">
+        <h1>Almacenamiento</h1>
+        <div class="lista">
+            <ul id="lista" contenteditable="true">
+                <li></li>
+            </ul>
+        </div>
+    </header>
+    <section>
+        <h2>LocalStorage:</h2>
+        <article>            
+            <input type="button" id="limpiarLocal" value="Limpiar LocalStorage">
+            <div id="mensajeLocal">
+            </div>
+            <div id="resultadoLocal">                
+            </div>
+        </article>
+    </section>
+    <section>
+        <h2>SessionStorage:</h2>
+        <article>
+            <input type="button" id="limpiarSession" value="Limpiar SessionStorage">
+            <div id="mensajeSession">
+            </div>
+            <div id="resultadoSession">                
+            </div>
+        </article>
+    </section>
+</body>
+</html>

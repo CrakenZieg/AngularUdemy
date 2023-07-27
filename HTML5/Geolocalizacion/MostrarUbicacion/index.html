@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/jquery-3.7.0.js"></script>
+<!-- import de google maps -->
+    <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script src="js/app.js"></script>
+    <script>
+// no compruebo con Modernizr para ahorrar tiempo ya que lo voy a correr con chrome
+        $(document).ready(function(){
+            let mapa = null;
+            let mapaMarcador = null;
+            navigator.geolocation.watchPosition(mostrarCoordenadas, mostrarErrores,
+            {maximumAge:1000,timeout:300000,enableHighAccuracy:true});
+            function mostrarCoordenadas(posicion){
+                let latitud = posicion.coords.latitude;
+                let longitud = posicion.coords.longitude;
+        //creamos una posicion de google maps
+                let googleMapsPosition = new google.maps.LatLng(latitud,longitud);
+                if(mapa==null){
+        //opciones de visualizacion para el mapa
+                    let opciones = {center: googleMapsPosition, zoom:15, mapTypeId: google.maps.MapTypeId.ROADMAP};
+        //generamos e insertamos el mapa en el html y lo guardamos en la variable 'mapa'
+                    mapa = new google.maps.Map(document.getElementById("resultado"),opciones);
+        //generamos el marcador con la posicion de google maps 
+                    mapaMarcador = new google.maps.Marker({position: googleMapsPosition, title: "Estás aquí!"});
+        //seteamos el marcador al elemento html
+                    mapaMarcador.setMap(mapa);
+                } else {
+        // si la posicion cambia y el mapa/marcador ya existe solo debemos moverlos a la nueva posicion
+                    mapa.panTo(googleMapsPosition);
+                    mapaMarcador.setPosition(googleMapsPosition);
+                }
+            }
+            function mostrarErrores(error){
+                switch(error.code){
+                    case error.PERMISSION_DENIED:
+                        alert("Permiso de geolocalización denegado");
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        alert("No se pudo recuperar la geolocalización");
+                        break;
+                    case error.TIMEOUT:
+                        alert("Tiempo de espera agotado");
+                        break;
+                    default:
+                        alert("Error de geolocalización desconocido: "+error.code);
+                }
+            }
+        });
+    </script>
+    <title>Ubicación</title>
+</head>
+<body>
+    <div id="resultado"></div>
+</body>
+</html>

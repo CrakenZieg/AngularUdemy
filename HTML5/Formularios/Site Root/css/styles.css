@@ -1,0 +1,53 @@
+body{
+    background-color: #F1FAEE;
+    color: #264653;
+    margin: 2px;
+}
+
+fieldset{
+    border: 2px groove #457B9D;
+    background-color: #A8DADC;
+}
+
+label, input, .invalid, ::placeholder{    
+    background-color: #A8DADC;
+    color: #1D3557;    
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+
+input{
+    border: 1px solid #457B9D;
+    border-radius: 2px;
+}
+
+input:focus{
+    border: 1px solid #2a9d8f;
+    box-shadow: 1px 1px #2a9d8f;
+    outline: 0.5px solid #457B9D;
+}
+
+input:invalid{
+    outline: 0.5px solid #E63946;
+}
+
+input:valid{
+    background-color: #73a78a;
+    color: #1D3557;
+}
+
+/* Escondemos con CSS el span que indica que el nombre es requerido una vez que el nombre 
+es correcto y ademas la class es .invalid*/
+input:valid+.invalid{
+    visibility: hidden;
+}
+
+input:invalid+.invalid{
+    visibility: true;
+}
+
+input[type="submit"]{
+    background-color: #457B9D;
+    color: #1D3557;
+    font-weight: 600;
+}

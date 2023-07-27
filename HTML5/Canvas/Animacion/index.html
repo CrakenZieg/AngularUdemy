@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/jquery-3.7.0.js"></script>
+    <script src="js/app.js"></script>
+    <title>Canvas</title>
+</head>
+<body>
+    <h1>Animacion con Canvas</h1>
+    <div id="canvas">
+        <canvas id="canvas1" width='600px' height='600px'></canvas>
+    </div>
+<!-- Cuando marcamos los atributos width y height le decimos a canvas cual es el tamano de la pizarra. 
+    El problema de la lineas difusas viene cuando css le agrega width y height. Creo que css debe hacer 
+    algun tipo de escalamiento con el elemento canvas que interfiere con la renderizacion, si le sacas 
+    los atributos de css funciona.
+    Podes modificar el tamano del elemento que contiene al elemento canvas sin hacer fallar el render
+    de canvas, o sea que es un 'problema' especifico de aplicarle width y height con css.
+-->
+</body>
+</html>

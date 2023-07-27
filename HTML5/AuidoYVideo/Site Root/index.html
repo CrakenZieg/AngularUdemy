@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Audio y Video</title>
+</head>
+<!-- 
+    Existen varios formatos y codificadores de video y audio asociados a ellos.
+    En funcion del soporte a los exploradores es conveniente brindar, por lo menos
+    opciones para cada navegador. 
+
+    Podemos utilizar diferentes herramientas y plugins para cambiar la codificacion
+    y la calidad de nuestros archivos multimedia.
+
+    -Video:
+
+    El contenedor/formato mp4 es soportado por Safari (Apple) e IE (Microsoft), sus 
+    codificadores son H.264 para video y AAC para audio. Este formato es el de mayor 
+    calidad y esta optimizado para movil, pero no es open source.
+
+    El contenedor Ogg es soportado por Mozilla, Chrome, Opera y Edge, sus codificadores 
+    son Theora para video y Vorbis para audio. Es un formato libre, de mayor soporte 
+    pero inferior calidad.
+
+    El contenedor WebM es soportado por Mozilla, Chrome, Opera y Edge, sus codificadores 
+    son VP8 para video y Vorbis para audio. Es un formato libre, de mayor calidad que 
+    Ogg y similar calidad a H.264.
+
+    -Audio:
+
+    Algunos formatos no poseen contenedor, como .mp3. Este y AAC (codificador de audio 
+    asociado a .mp4) no son formatos libres y no son soportados en todos los navegadores.
+
+    Ogg es el contenedor que tiene como codificador a Vorbis (igual que en video pero 
+    sin él, formato libre). 
+
+    Wave (.wav) es el formato y utilizado en los CD, no tiene codificador porque no tiene
+    compresion, por lo tanto es soportado por la mayoria de los navegadores.
+-->
+<body>
+    <header>
+        <h1>Manejo de video</h1>
+    </header>
+    <section>
+        <article>
+            <h3>Video HTML5</h3>
+<!-- En la etiqueta de video podríamos poner el source como atributo 'src' en la etiqueta,
+    pero dado que tenemos diferentes formatos posibles utilizamos la etiqueta source. 
+    Tenemos que incluir el atributo controls para que muestre la barra de reproduccion.
+    Podemos agregar autoplay (carga la pag y comienza el video) y muted (comienza muteado),
+    tambien podemos agregar poster para asignarle una imagen por defecto al reproductor
+    antes de reproducir, cuando recien carga la pagina, tambien podemos agregar loop, pero 
+    puede no ser soportado por algunos navegadores.
+    Es recomendable agregar width y height-->
+            <video poster="resources/portada.jpg" controls>
+<!-- Es mejor utilizar la etiqueta source para agregar las opciones de reproduccion.
+    El navegador que acceda a este archivo html va a mostrar el primer source que pueda 
+    reproducir. Es conveniente ubicar primero el mp4 ya que muchas veces, si no pueden
+    reproducir el primero, algunos navegadores no siguen buscando otras opciones, 
+    el siguiente deberia ser webm por seguir en calidad y por ultimo ogg-->
+                <source src="resources/Clubjavamaster.mp4" type="video/mp4">
+                <source src="resources/ClubJavaMaster.webm" type="video/webm">
+                <source src="resources/ClubJavaMaster.ogv" type="video/ogg">
+<!-- Si ninguno de los sources funciona, la etiqueta video mostrara el texto en su interior -->
+                <p>El navegador no soporta el video HTML5</p>
+            </video>
+        </article>
+        <article>
+            <h3>Audio HTML5</h3>
+            <audio controls >
+                <source src="resources/IntroGlobalMentoring.mp3" type="audio/mpeg">
+                <source src="resources/IntroGlobalMentoring.m4a" type="audio/mp4">
+                <source src="resources/IntroGlobalMentoring.ogg" type="audio/ogg">
+                <p>El navegador no soporta el audio HTML5</p>
+            </audio>
+        </article>
+    </section>
+    <script src="js/app.js"></script>
+</body>
+</html>
