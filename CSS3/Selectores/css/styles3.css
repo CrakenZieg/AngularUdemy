@@ -1,0 +1,46 @@
+/* Selectores n-child */
+
+/* Elegimos el primer h1 */
+h1:first-child{
+    color: brown;
+}
+
+/* Elegimos el último h1 */
+h1:last-of-type{
+    color: darkgreen;
+}
+
+/* Elegimos el primer li */
+li:first-child{
+    color: blueviolet;
+}
+
+/* Elegimos el n=2 li (segundo) */
+li:nth-child(2){
+    color: darkgoldenrod;
+}
+
+/* Elegimos el k=3n li (cada 3) */
+li:nth-child(3n){
+    color: crimson;
+}
+
+/* Elegimos el k=(3n+4) li (cada 3 a partir del 4) */
+li:nth-child(3n+4){
+    color: darkblue;
+}
+
+/* Elegimos el k=(-2n) li (cada 2 en sentido contrario) 
+li:nth-child(-2n){
+    color: darkblue;
+}*/
+
+/* Elegimos el n=3 li desde el final */
+li:nth-last-child(3){
+    color: olive;
+}
+
+/* Podemos combinar selectores con ',' como siempre
+li:nth-last-child(3),li:nth-child(-2n){
+    color: olive;
+}*/

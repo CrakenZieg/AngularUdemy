@@ -1,0 +1,36 @@
+@font-face {
+    font-family: 'AlexBrush-Regular';
+    src: url('../fonts/AlexBrush-Regular.ttf') format('truetype');
+}
+
+body{
+    font-family: 'AlexBrush-Regular';
+}
+
+.sombra{
+    text-shadow: 5px 5px 8px grey;
+}
+
+.cincel{
+    width: 350px;
+    height: 50px;
+    background: #CCC;
+    text-shadow: 1px 1px white, -1px -1px #333;
+    font-size: x-large;
+    text-align: center;
+    color: #D1D1D1;
+    font-weight: bold;
+}
+
+.neon{
+    margin-top: 20px;
+    text-align: center;
+    width: 300px;
+    height: 80px;
+    background: black;
+    color: white;
+/* Múltiples sombras son aplicadas del frente al fondo, en el mismo orden que sean definidas. */
+    text-shadow: 0px 0px 10px #fff, 0px 0px 20px #fff,
+     0px 0px 40px #fff, 0px 0px 20px #ff00de, 0px 0px 70px #ff00de;
+    font-size: x-large;
+}

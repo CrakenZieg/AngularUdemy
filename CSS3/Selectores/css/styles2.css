@@ -1,0 +1,17 @@
+/* Selectores por atributo */
+
+/* Elemento a con atributo href que empiece con http */
+a[href^=http]{
+    color: red;
+}
+
+/* Elementos href que terminen con .png */
+
+a[href$='.png']{
+    color: darkred;
+/* le agregamos el icono de fondo, no dejamos que se repita y hacemos que se oriente a la derecha */
+    background: url("../images/pdf_icon.png") no-repeat right;
+/* agregamos un padding de 25px a la derecha para la imagen */
+    padding-right: 25px;
+}
+

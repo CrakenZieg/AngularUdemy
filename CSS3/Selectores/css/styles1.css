@@ -1,0 +1,29 @@
+/* Indica que el estilo se aplica a parrafos */
+p {
+    border: 1px solid blue;
+}
+
+div {
+    border: 1px dotted black;
+}
+
+/* Indica que el estilo se aplica a parrafos hijos de div */
+div > p {
+    border: 1px solid red;
+}
+
+/* Indica que el estilo se aplica a parrafos hijos de div hijos de div */
+div > div > p {
+    border: 1px solid green;
+}
+
+/* Indica que el estilo se aplica a parrafos adyacentes y posteriores 
+a div y al mismo nivel que estos */
+div + p {
+    background-color: cadetblue;
+}
+
+/* Parrafos cuyo div es hermano de un parrafo, debe estar depues de div */
+div ~ p {
+    color: red;
+}
