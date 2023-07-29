@@ -1,0 +1,13 @@
+h1{
+    color: grey;
+}
+/* texto multicolumna
+   columns: settea column-width y column-count automaticamente 
+   column-gap: separacion entre columnas 
+   column-rule: establece una regla de separacion */
+p{
+    text-align: justify;
+    columns: 2; 
+    column-gap: normal;
+    column-rule: 1px dashed black;
+}

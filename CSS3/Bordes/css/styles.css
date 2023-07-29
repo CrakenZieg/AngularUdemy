@@ -1,0 +1,38 @@
+#contenedor{
+    width: 600px;
+    display: flex;
+    border: 1px solid black;    
+}
+
+#contenedor div{
+    background-color: darkkhaki;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    width: 80px;
+    height: 80px;
+    margin: 10px;
+}
+
+#uno{
+    border-radius: 10px;
+}
+
+#dos{
+    border-radius: 5px/20px;
+}
+
+#tres{
+    border-radius: 20px/5px;
+}
+#cuatro{
+/* orden: top-left top-right bottom-right bottm-left */
+    border-radius: 5px 15px 25px 35px;
+}
+
+#cinco{
+    border-radius: 10px;
+/* orden: right down blur color */
+    box-shadow: 3px 3px 4px grey;
+}

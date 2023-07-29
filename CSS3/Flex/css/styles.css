@@ -1,0 +1,32 @@
+/*
+    FlexBox:
+    !Me parece que esto esta deprecado!
+    box-align: horizontal o vertical;
+    box-pack: controla la direccion contraria a box-align;
+    box-flex: define la proporcion;
+    box-direction: direccion -> normal o reverse;
+    box-ordinal-group: agrupa elementos con un numero de grupo;
+*/
+
+#contenedor div{
+    background-color: bisque;
+    padding: 10px;
+    width: 40px;
+    margin: 10px;
+}
+
+/* display: flex la declara como flexible*/
+#contenedor{
+    width: 500px;
+    height: 500px;
+    display: flex;
+    /* flex-direction: column; direccion del contenedor flex 
+    /* flex-direction: row-reverse; direccion del contenedor en reverso*/
+    align-items: center; /* alineacion en la direccion principal */
+    justify-content: center; /* alineacion en la direccion secundaria */
+    border: 1px dashed black;
+}
+
+#uno{
+    /*flex-grow: 1;  que proporcion del lugar total utiliza*/
+}
