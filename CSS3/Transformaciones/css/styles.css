@@ -1,0 +1,73 @@
+/* Transformaciones: 
+    -Rotacion-> transform:rotate(grados);
+    -Traslación-> transform:translate(dX,dY);
+    -Inclinación-> transform:skew(gradX,gradY);
+    -Escalamiento-> transform:scale(escalaX,escalaY);
+    *Con transform-origin podemos modificar el centro 
+    desde el que surge la transformacion
+
+   Transiciones:
+    -transition-property-> podemos declarar una trasicion para 
+    todos los elementos de determinada clase ponele #contenerdo div
+    -transition-duration-> cuanto dura la transicion;
+    -transition-timing-function-> curva de velocidad de la transicion;
+    -trasition-delay-> delay
+
+*/
+
+#contenedor{
+    display: flex;
+    border: 1px solid black;
+    background: darkgray;
+    width: fit-content;
+}
+
+#contenedor div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: gold;
+    padding: 10px;
+    width: 80px;
+    height: 80px;
+    margin: 10px;
+}
+
+#uno:hover{
+    transform: rotate(0.25rad);
+}
+#dos:hover{
+    transform: translate(10px,10px);
+}
+#tres:hover{
+    transform: skew(0.3rad,0.4rad);
+}
+#cuatro:hover{
+    transform: scale(1.5);
+}
+#cinco:hover{
+    transform: scale(1.1) skew(0.15rad);
+    transform-origin: center bottom;
+    transition-duration: 2s;
+    transition-timing-function: ease-in-out;
+}
+#seis:hover{
+/* animation: (animacion declarada con @keyframes, duracion, 
+                curva de velocidad, delay, cantidad de animaciones,
+                orientacion de la animacion, defalut sin animacion) */
+    animation: latidos 3s ease 0s infinite normal both;
+}
+@keyframes latidos{
+    0%{
+        background: gold;
+        transform: scale(1);
+    }
+    50%{
+        background: goldenrod;
+        transform: scale(1.1);
+    }
+    100%{
+        background: gold;
+        transform: scale(1);
+    }    
+}
