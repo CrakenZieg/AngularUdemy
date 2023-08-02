@@ -1,9 +1,21 @@
-<h1>Listado de personas vo'!</h1>
-<ul>
-  <li>
-    <app-persona></app-persona>
-  </li>
-  <li>
-    <app-persona></app-persona>
-  </li>
-</ul>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>Listado de personas vo'!</h1>
+      <button class="btn btn-primary"
+        [disabled]="deshabilitar"
+        (click)="agregarPersona()"
+        >
+        Agregar Persona
+      </button>
+      <p>{{mensaje}}</p>
+      <br>
+      <app-persona></app-persona>
+      <label for="titulo">Titulo:</label>
+<!-- en vez de usar un input y event binding usamos directamente twoway binding
+      <input type="text" class="form-control" (input)="modificarTitulo($event)"> -->
+      <input type="text" class="form-control" id="titulo" [(ngModel)]="titulo">
+      {{titulo}}
+    </div>
+  </div>
+</div>

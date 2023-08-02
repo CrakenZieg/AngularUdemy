@@ -24,4 +24,38 @@ usando el path desde su lugar en node_modules
 
 Podemos incluir tanto codigo html en la parte de template como codigo css
 en la parte de styles de cada componente
+
+Si declaramos variables en la parte Ts del componente podemos referenciarlo
+mediante interpolacion en nuestro html usando {{ variable }}, la variable
+no debe ser private para que funcione, de ser private podemos usar interpolacion
+y llamar un getter
+
+La interpolacion tambien puede manejar expresiones
+
+Con Template Reference Variable podemos declarar variables en el html y
+recuperar la informacion dentro de nuestro Ts, las declaramos usando #variable
+como atributo del elemento html
+
+Property Binding nos permite aasignar valores a nuestros elementos html. Debemos
+usar [atributo]='variable' en nuestro elemento html siendo variable la que guarde
+el valor en nuestro Ts
+
+Con Event Binding podemos capturar eventos desde html y enviarlos a Ts
+Tenemos varios eventos (click) (input) etc.. Todos van como atributo en el elemento
+html y llaman a un metodo del Ts correspondiente. Cuando queremos capturar parte
+contenido del elemento html pasamos como parametro $event al metodo que llamamos de
+forma que el resultado seria '(evento) = "metodoEnTs($event)"'
+El metodo en Ts va a recibir un event:Event y accedemos a su value parseando:
+valorQueQuiero = <HTMLInputElement>event.target).value
+
+Con Two Way Binding logramos relacionar ambas instancias del componente en ambos
+sentidos el html con el Ts y el Ts con el html
+
+En el ejemplo debemos ingresar tambien el Forms-Module para poder aplicar este
+binding particular
+
+En vez de usar un input con event binding usamos directamente twoway binding
+con la sintaxis '[(ngModel)] = "variable"'
+y no
+necesitamos hacer un parseo
 -->
