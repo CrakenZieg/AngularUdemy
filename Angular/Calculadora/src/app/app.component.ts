@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Calculadora';
+  resultadoP:number;
+
+  resultadoNum(resultado:number){
+    this.resultadoP = resultado;
+  }
 }

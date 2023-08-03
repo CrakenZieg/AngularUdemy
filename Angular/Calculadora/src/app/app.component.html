@@ -1,4 +1,10 @@
 <div class="container">
   <h1>Aplicación de Calculadora</h1>
-  <app-calculadora></app-calculadora>
+  <app-calculadora
+  (resultado)="resultadoNum($event)"
+  ></app-calculadora>
+  <hr>
+  <app-resultado
+  [resultado]="resultadoP"
+  ></app-resultado>
 </div>

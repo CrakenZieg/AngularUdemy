@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-calculadora',
@@ -7,9 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalculadoraComponent implements OnInit {
 
-  operandoA:number = 0;
-  operandoB:number = 0;
-  resultado:number = 0;
+  operandoA:number;
+  operandoB:number;
+  @Output() resultado:EventEmitter<number> = new EventEmitter<number>();
 
   constructor() { }
 
@@ -17,7 +17,7 @@ export class CalculadoraComponent implements OnInit {
   }
 
   sumar(){
-    this.resultado = this.operandoA + this.operandoB;
+    this.resultado.emit(this.operandoA + this.operandoB);
   }
 
 }

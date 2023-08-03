@@ -5,11 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CalculadoraComponent } from './calculadora/calculadora.component';
 import { FormsModule } from '@angular/forms';
+import { ResultadoComponent } from './resultado/resultado.component';
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
-      CalculadoraComponent
+      CalculadoraComponent,
+      ResultadoComponent
    ],
   imports: [
     BrowserModule,
