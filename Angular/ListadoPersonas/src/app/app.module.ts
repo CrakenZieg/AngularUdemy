@@ -3,14 +3,16 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CalculadoraComponent } from './calculadora/calculadora.component';
 import { FormsModule } from '@angular/forms';
+import { PersonaComponent } from './persona/persona.component';
+import { AgregarComponent } from './agregar/agregar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-      CalculadoraComponent
-   ],
+    PersonaComponent,
+    AgregarComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

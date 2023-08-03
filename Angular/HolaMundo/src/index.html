@@ -56,6 +56,10 @@ binding particular
 
 En vez de usar un input con event binding usamos directamente twoway binding
 con la sintaxis '[(ngModel)] = "variable"'
-y no
-necesitamos hacer un parseo
+y no necesitamos hacer un parseo
+
+El atributo *ngIf nos permite mostrar o no un elemento html en funcion de un booleano
+de nuestro Ts. Tambien nos permite agregar un 'else' para renderizar en caso de false.
+La sintaxis seria: <elem *ngIf = "booleano; nombreElseBlock"></elem>
+Y para el 'else': <ng-template #nombreElseBlock> 'bloque else' </ng-template>
 -->

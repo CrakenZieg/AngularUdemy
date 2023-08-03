@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="col">
+    <h1>Listado de personas</h1>
+  </div>
+  <hr>
+  <app-agregar (personaCreada)="personaPush($event)"></app-agregar>
+  <hr />
+  <app-persona
+    *ngFor="let personaElem of listado; let i = index"
+    [persona]="personaElem"
+    [indice]="i"
+  >
+  </app-persona>
+</div>

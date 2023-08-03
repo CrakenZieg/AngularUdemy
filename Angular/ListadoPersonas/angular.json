@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Calculadora": {
+    "ListadoPersonas": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/calculadora",
+            "outputPath": "dist/listado-personas",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -63,10 +63,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Calculadora:build:production"
+              "browserTarget": "ListadoPersonas:build:production"
             },
             "development": {
-              "browserTarget": "Calculadora:build:development"
+              "browserTarget": "ListadoPersonas:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -74,7 +74,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Calculadora:build"
+            "browserTarget": "ListadoPersonas:build"
           }
         },
         "test": {
@@ -99,6 +99,6 @@
     }
   },
   "cli": {
-    "analytics": "88c9d8a1-4def-4daa-b48a-c8457da191be"
+    "analytics": "5074b0b5-9d11-4493-88b1-c80e0436d06b"
   }
 }

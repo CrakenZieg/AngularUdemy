@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ListadoPersonas</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-root></app-root>
+<!--
+  Property binding permite compartir informacion entre componentes anidados
+  en ambas direcciones.
+
+  Utilizamos @Input en los componentes hijos que reciben informacion de los
+  padres. Se pasa en forma de atributo en el elemento html con la sintaxis:
+  [variableEnTsHijo] = "variableQuePasaElPadre"
+  y en el Ts del hijo debemos declarar la variable como:
+  @Input variableEnTsHijo:tipoDeVariable
+
+  Utilizamos @Output en los componentes hijos que comparten informacion con
+  los padres. Se pasa en forma de atributo en el elemento html padre con la
+  sintaxis:
+  (EventoEnTsHijo) = "metodoDelPadreQueRecibe($event)"
+  y en el Ts del hijo debemos declarar la variable como:
+  @Output EventoEnTsHijo = EventEmitter<TipoDato>();
+  Y tambien un metodo que sea el que hace emitir al evento:
+  metodoEnHijo(){
+    this.EventoEnTsHijo.emit(datoParaPadre:TipoDato);
+  }
+  Por ultimo, en el Ts del padre debe haber alguien que reciba el evento:
+  metodoDelPadreQueRecibe(datoRecibido:TipoDato){
+    //lo que haga con 'datoRecibido'
+  }
+  Notese que lo que pasa como atributo en el elemento de padre a hijo no es
+  el metodo que hace emitir al evento si no EL EVENTO MISMO
+-->
+</body>
+</html>

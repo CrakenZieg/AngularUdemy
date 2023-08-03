@@ -8,8 +8,9 @@ import { Component, OnInit } from '@angular/core';
 export class PersonasComponent implements OnInit {
 
 	deshabilitar:boolean = false;
-	mensaje:string = "No se ha agregado ninguna persona";
+	mensaje:string = "";
 	titulo:string = 'Titulo';
+  mostrar:boolean = false;
 
 	constructor() { }
 
@@ -17,7 +18,8 @@ export class PersonasComponent implements OnInit {
 	}
 
 	agregarPersona(){
-		this.mensaje = "Persona agregada!";
+		this.mensaje = "Persona agregada";
+    this.mostrar = true;
 	}
 
 //No usaremos este metodo ya que usamos Two Way binding
