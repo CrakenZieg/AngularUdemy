@@ -1,14 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>ListadoPersonas</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <app-root></app-root>
+  <head>
+    <meta charset="utf-8" />
+    <title>ListadoPersonas</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+</html>
 <!--
   Property binding permite compartir informacion entre componentes anidados
   en ambas direcciones.
@@ -35,6 +37,157 @@
   }
   Notese que lo que pasa como atributo en el elemento de padre a hijo no es
   el metodo que hace emitir al evento si no EL EVENTO MISMO
+
+  ** En TwoWay binding [(ngModel)] vos relacionas un elemento html con una
+  variable en Ts, con LocalReference podes extraer datos de un elemento html
+  directamente pero no podes modificar ese elemento, la referencia se crea
+  incluyendo el atributo #nombreReferencia en el elemento input del que
+  queremos extraer informacion y pasando esa referencia como parametro al
+  metodo que llamemos en el submit, es decir metodoEnSubmit(nombreReferencia1,...etc)
+
+  Con @ViewChild('nombreReferencia') tambien podes relacionar una variable en
+  Ts con una localReference declarada en un elemento html, la sistanxis en
+  Ts es @ViewChild('nombreReferencia') nombreVariable:ElementRef; y recuperamos
+  el valor usando this.nombreVariable.nativeElement.value
+
+  Los servicios se introducen en los componentes mediante Dependency Injection.
+  En el constructor introducimos como parametro las interfaces/clases que necesitamos
+  y angular las instancia e inyecta
+
+  Single responsibility:
+    cada 'clase' deberia tener una sola 'responsabilidad'
+    (no hagas monolitos)
+  Open-closed:
+    las clases deberian estar abiertas a la extension y cerradas a la modificacion
+    (no modifiques el padre si podes heredar en una clase mas especifica)
+  Liskov substitution:
+    cualquier clase deberia poder ser reemplazada por una de sus herederas sin consecuencias
+    (no sobreescibas metodos, hereda)
+  Interface segregation:
+    ninguna clase deberia depender de metodos que no usa, en otras palabras, cualquier
+    interface debe cumplir un objetivo particular
+    (mejor mas interfaces chicas que menos y mas grandes, cada interface deberia resolver un
+    problem particular)
+  Dependency inversion:
+    las clases de alto nivel no deben depender de las clases de bajo nivel, ambas deben
+    depender de abstracciones las abstracciones no deben depender de las implementaciones,
+    las implementaciones deben depender de las abstracciones
+    (Ej: un controlador que requiere un DAO y un encriptador deberia tener clases que
+    implementen interfaces DAO y de encriptacion de manera que la implementacion de como
+    accede a la DDBB o de que manera encripta le sean indiferentes, los detalles de la
+    implementacion no deben afectar la arquitectura de la clase de alto nivel)
+
+    Inversion de Dependencias viene de la mano de Inyeccion de Dependencias, en la cual una
+    clase solo declara que interfaces necesita, quedando en el framework que corre el
+    programa instanciar las clases que implementan las interfaces que la primer clase
+    necesitaba, ademas permite cambiar implementaciones en tiempo de ejecucion
+    => como pasa en Spring, que la factory inyecta las dependecias que vos @anotas
+
+    En Typescript existen las interfaces y podriamos usarlas en este caso, pero no existen
+    en el codigo compilado (Js), por lo que nos vemos obligados a usar abstract class en
+    vez de una interfaz. No debemos olvidar registrar el servicio y su abstrac dentro
+    de los provedores en app.module usando la sintaxis:
+    { provide:abstractClass, useClass:implementedClass }
+
+    En app-routing podemos declarar las rutas y cuales seran las respuestas a cada path
+    usando la sintaxis {path:'/algo(o_nada)',component: Componente_a_renderizar}, estos
+    componentes se mostraran en la etiqueta router-outlet.
+
+    Para navegar podemos usar link <a> con el atributo [routerLink]="['/path', agregadoAlPath]",
+    o en los Ts, la interface router:Router que nos permite llamar a this.router.navigate(['path'])
+    y que nos redirigira a esa ruta lo que renderizara los componentes necesarios en router-outlet.
+    Podemos acceder al agregadoAlPath de la redireccion usando la interfaz route:ActivatedRoute y
+    luego this.variable = this.route.snapshot.params['varDeLaQuery'].
+
+    Tambien podemos pasar informacion en el path directamente usando el atributo [queryParams]="{variable:'valor'}"
+    en el elemnto que posee el atributo [routerLink] y de manera analoga a pasar el dato entre
+    componentes directamente en el agregadoAlPath de [routerLink], podemos acceder a esa informacion
+    con la sintaxis this.variableEnTs = this.route.snapshot.queryParams['variable'] en nuestro Ts.
+  **this.route.snapshot.queryParams['variable'] debemos estar seguros que devuelva el tipo que necesitamos**
+
+    En app-routing podemos tambien, cuando tenemos paths con varios subpaths, usar el concepto
+    de Child Route, con la sintaxis:
+    {path:'pathPadre', component: Componente_a_renderizar, children:[
+      {path:'hijo1',component: Componente_a_renderizar},
+      {path:':variable',component: Componente_a_renderizar}
+    ]}
+    De declarar path hijos debemos tambien declarar un router-outlet en el html del componente
+    rederizado en el path padre
+
+    Por ultimo, en app-routing podemos tambien declarar una ruta de error, debe ser la ultima (como en spring)
+    y sera la respuesta a pedidos no contemplados en los paths declarados previamente, la sintaxis es
+    {path:'**',component: ErrorComponent} (literalemente 2 asteriscos)
+
+    Usaremos Firebase como DDBB para empezar con las http requests. Cremamos un proyecto y dentro de este
+    una DDBB realtime (version vieja, ahora se recomienda firestore) porque es mas simple de utilizar.
+    Creamos un service 'data' y desde este haremos las llamadas usando la interface HttpClient. Los metodos
+    son los conocidos: PUT (modificar), POST (publicar), GET (recuperar) y DELETE (eliminar). Es importante
+    en PUT, POST y DELETE hacer .subscribe(responseHandler) para que Angular realmente haga el llamado,
+    de otro modo, sin nadie que se suscriba a la response no va a ejecutar la llamada. Tambien es
+    necesario aclarar en get<retorno>(url) el tipo del 'retorno' y tambien suscribirse al observable
+    que nos devuelve el get. Dentro de la suscripcion a este observable debemos manejar ese retorno.
+
+    Para el delete usamos el indice 'nativo' de la ddbb (cosa que esta claramente mal) pero es para no
+    irse del scope del ejercicio.
+
+    TwoWayBinding tambien puede declararse usando simplemente el atributo ngModel 'limpio'/'pelado' y
+    va a linkear un input con una variable por su atributo 'name'.
+
+    Para configurar la autenticacion en firebase debemos entrar en >compilacion >autenticacion >signInMethod
+    y configurar, en este caso, la autenticacion con email y password, luego en la parte de rules aclarar
+    que .read y .write va "auth != null". Es decir, para acceder solo hay que autenticar.
+
+    Una vez autenticados, firebase nos va a devolver un token en forma de string que vamos a tener que
+    adjuntar a nuestras url. Inicializamos la app con los datos que obtuvimos al instalar firebase en
+    el proyecto usando npm install firebase (lo agregamos a node primero) y luego ng add @angular/firebase
+    para sumarlo al proyecto propiamente dicho. Dato no menor, debimos crear una carpeta llamada
+    environments y dentro de ella un archivo Ts llamado environment.ts que tiene la informacion que
+    obtuvimos en firebase
+
+    Creamos un servicio de login que justamente haga eso. Hacemos import * as firebase from '@angular/fire/auth';
+    y usamos firebase.signInWithEmailAndPassword(firebase.getAuth(),email,password), esto nos devuleve
+    una promise que manejamos con .then(handler) y el handler debe hacer a su vez
+    firebase.getAuth().currentUser?.getIdToken() que de nuevo nos devuelve una promise que va a ser
+    el token, el cual mediante una funcion flecha asignamos al token que creamos como variable en login.service.
+    por ultimo hacemos this.router.navigate(['/']); para volver a la pagina principal. Tambien creamos
+    un getIdToken() que devuelva dicha variable.
+
+    **TENES QUE METER EN EL CONSTRUCTOR DEL LOGIN 'private auth:firebase.Auth' ** SI NO, NO ANDA
+    **Tambien incluir import { AngularFireModule } from '@angular/fire/compat'; en app.module ** SI NO, NO ANDA
+
+    HAY QUE INGRESAR LOS SERVICIOS EN LOS PROVIDERS DE APP.MODULE
+
+    Con el service listo lo inyectamos en el constructor del componente login para que haga el login del
+    servicio con los datos del formulario (email y password). Luego en dataServices tenemos que incluir
+    el token en nuestras peticiones para poder recuperar los datos.
+
+    Como el estado autenticado esta asociado a tener o no un token, creamos en loginComponent un isAutenticado()
+    que claramente devuelve un booleano en funcion de si token es null o no. Luego para crear el logout solo
+    debemos hacer token = null, y redirigir a /login. Gracias a isAutenticado() podemosusan ngIf para mostrar
+    o no botones asociados a ese estado.
+
+    Agregamos guards de angular para evitar exponer direcciones a las que no deberias acceder sin el login
+    realizado. Antes se lograba implementando la interface CanActivate, agregando el 'metodo guardia' en la
+    ruta del app-routing. El metodo canActivate(param1, param2) era el que exigia la implementacion de esa
+    interface. Ahora se sigue aplicando el metodo pero se depreco la interface, y se exporta como funcion flecha
+    con los mismos parametros que canActivate, esta funcion inyecta el servicio y retorna el metodo canActivate
+    declarado en el servicio pasandole los parametros. En implementacion segun dicen en stackoverflow no hay
+    grandes cambios.
+
+    En todo caso luego en el app-routing debemos poner, con el path y el componente un parametro mas que es un
+    arreglo de guardianes con la sintaxis {path:'ruta', componene: Componente, canActivate:[arregloGuardianes]}.
+    Lo que va en el arreglo es el metodo que inyecta el servicio con el metodo canActivate declarado!
+
+    Completa la app, mediante el comando ng build compilamos la aplicacion a algo que los navegadores pueden
+    procesar. Aunque es el valor por default teoricamente, se puede agregar la opcion --aot (ahead of time)
+    que hace a la aplicacion mas rapida despues de compilada. Otra opcion comun es, si sera desplegada dentro de
+    otra carpeta por ejemplo, agregar --base-href /paths..
+
+    Una vez hecha la build de proyecto, para desplegar en firebase debemos, mediante npm insatall -g firebase-tools
+    instalamos firebase con node.js, luego ejecutamos 'firebase login' en cmd para iniciar con nuestra cuenta de
+    google. El paso siguiente es aclarar que caracteristicas vamos a usar dentro del proyecto, en nuestro caso
+    usaremos RealTime Database y Hosting. Seleccionamos el proyecto, y luego la cartpeta en la que esta el
+    compilado 'dist' que creamos con ng build, si pregunta si es single-page app claramente corresponde dar si
+    ya que es como funciona y lo que produce angular. Seguido debemos incluir en hosting > public y agregar posibles
+    subcarpetas dentro de dist (para llegar al proyecto claro esta)
 -->
-</body>
-</html>

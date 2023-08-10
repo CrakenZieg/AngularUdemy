@@ -1,22 +1,26 @@
-import { Component, Output } from '@angular/core';
-import { Persona } from './modelo/persona.model';
+import { Component, OnInit } from '@angular/core';
+import * as firebase from '@angular/fire/app';
+import * as firebaseAuth from '@angular/fire/auth';
+import { LoginService } from './servicios/login.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
-
+export class AppComponent implements OnInit {
   title = 'Listado de personas';
-  listado:Persona[]=[
-    new Persona('Mau1','Mau1'),
-    new Persona('Mau2','Mau2'),
-    new Persona('Mau3','Mau3'),
-  ];
 
-  personaPush(persona:Persona){
-    this.listado.push(persona);
+  constructor(private loginService:LoginService) {}
+
+  ngOnInit(): void {
   }
 
+  isAutenticado(){
+    return this.loginService.isAutenticado();
+  }
+
+  salir(){
+    this.loginService.logout();
+  }
 }

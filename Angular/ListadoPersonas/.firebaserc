@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "listado-personas-3c913": {
+      "hosting": {
+        "ListadoPersonas": [
+          "listado-personas-3c913"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "listado-personas-3c913"
+  }
+}

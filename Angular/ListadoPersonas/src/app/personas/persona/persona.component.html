@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <a [routerLink]="['/personas', indice]"
+        [queryParams]="{modificar:1}"
+        >{{ persona.nombre }} {{ persona.apellido }}</a
+      >
+      <!-- Podemos agregar al link un parametro mediante [queryParams] = "{parametro:'valor'}" -->
+      <!-- <p>{{ indice + 1 }}. {{ persona.nombre }} {{ persona.apellido }}</p>
+    </div>
+      <button type="submit" class="btn btn-info w-auto" (click)="editar()">
+        Editar
+      </button> -->
+    </div>
+  </div>
+</div>

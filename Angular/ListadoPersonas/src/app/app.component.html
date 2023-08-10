@@ -1,14 +1,12 @@
-<div class="container">
-  <div class="col">
-    <h1>Listado de personas</h1>
-  </div>
-  <hr>
-  <app-agregar (personaCreada)="personaPush($event)"></app-agregar>
-  <hr />
-  <app-persona
-    *ngFor="let personaElem of listado; let i = index"
-    [persona]="personaElem"
-    [indice]="i"
-  >
-  </app-persona>
+<div *ngIf="!isAutenticado()" class="box centrado">
+  <a routerLink="/login">Login</a>
+</div>
+<div *ngIf="isAutenticado()" class="box centrado">
+  <a style="cursor:pointer" (click)="salir()">Logout</a>
+</div>
+<div class="box container" id="heading">
+  <h1>Listado de personas</h1>
+</div>
+<div class="box container">
+<router-outlet></router-outlet>
 </div>

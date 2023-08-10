@@ -1,0 +1,83 @@
+<form class="forms-row card" #f="ngForm" (ngSubmit)="f.form.valid && onGuardarPersona()">
+  <div class="forms-group">
+    <div class="row">
+      <div class="col">
+        <input
+          type="text"
+          class="form-control"
+          name="nombre"
+          placeholder="Nombre"
+          [(ngModel)]="nombre"
+          #nombreLocalRef
+          required
+        />
+      </div>
+      <div class="col">
+        <input
+          type="text"
+          class="form-control"
+          name="apellido"
+          placeholder="Apellido"
+          [(ngModel)]="apellido"
+          #apellidoLocalRef
+          required
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          type="submit"
+          class="btn btn-primary"
+        >
+          Agregar Persona (form)
+        </button>
+      </div>
+      <div class="col" *ngIf="indice!=null">
+        <button
+          type="button"
+          class="btn btn-primary red"
+          (click)="eliminarPersona()"
+        >
+          Eliminar Persona (form)
+        </button>
+      </div>
+      <div class="col">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          (click)="agregarPersonaModel()"
+        >
+          Agregar Persona (ngModel)
+        </button>
+      </div>
+      <div class="col">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          (click)="agregarPersonaLocal(nombreLocalRef, apellidoLocalRef)"
+        >
+          Agregar Persona (LocalReference)
+        </button>
+      </div>
+      <div class="col">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          (click)="agregarPersonaViewChild()"
+        >
+          Agregar Persona (ViewChild)
+        </button>
+      </div>
+      <div class="col">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          (click)="agregarPersonaService()"
+        >
+          Agregar Persona (Service)
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

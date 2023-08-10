@@ -1,0 +1,48 @@
+<form (ngSubmit)="f.form.valid && agregarRegistro()" #f="ngForm">
+  <div class="agregar">
+    <div class="agregar_contenedor">
+      <select
+        #sel
+        (change)="tipoOperacion(sel.value)"
+        [ngClass]="{ redfocus: tipo === 'egreso' }"
+        class="agregar_tipo"
+      >
+        <option value="ingreso" selected>+</option>
+        <option value="egreso">-</option>
+      </select>
+      <input
+        type="text"
+        class="agregar_descripcion"
+        [ngClass]="{ redfocus: tipo === 'egreso' }"
+        placeholder="Agregar Descripción"
+        name="descripcionInput"
+        [(ngModel)]="descripcionInput"
+        required
+      />
+      <input
+        type="number"
+        class="agregar_valor"
+        [ngClass]="{ redfocus: tipo === 'egreso' }"
+        placeholder="Valor"
+        name="valorInput"
+        [(ngModel)]="valorInput"
+        required
+      />
+      <button
+        type="submit"
+        class="agregar_btn"
+        [ngClass]="{ red: tipo === 'egreso' }"
+      >
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+      </button>
+    </div>
+  </div>
+</form>
+
+<!--
+Me llegó un mail informandome que tenía vacante en la comisión 23549,
+pero yo ya estoy cursando en la 23548. Quería informar por si se trata de un error,
+ ya que mi primera opción de cursada era lunes y miércoles (comisión 23548), y la
+ segunda era martes y jueves (comisión 23549). Quiero seguir en la 23548.
+
+ -->
