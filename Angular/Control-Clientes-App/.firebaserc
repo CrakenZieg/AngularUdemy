@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "control-clientes-365a9": {
+      "hosting": {
+        "Control-Clientes-App": [
+          "control-clientes-365a9"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "control-clientes-365a9"
+  }
+}

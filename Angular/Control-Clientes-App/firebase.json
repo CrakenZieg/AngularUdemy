@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "Control-Clientes-App",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}
