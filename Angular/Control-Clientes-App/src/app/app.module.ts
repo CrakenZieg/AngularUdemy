@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AngularFireModule } from '@angular/fire/compat';
 import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,6 +17,8 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { ClienteService } from './servicios/cliente.service';
+import { LoginService } from './servicios/login.service';
 
 @NgModule({
   declarations: [
@@ -36,12 +37,11 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
     BrowserModule,
     AppRoutingModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    AngularFireModule,
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     FormsModule
   ],
-  providers: [],
+  providers: [ClienteService,LoginService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
