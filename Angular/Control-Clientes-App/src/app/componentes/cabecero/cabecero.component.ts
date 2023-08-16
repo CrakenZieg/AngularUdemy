@@ -5,31 +5,31 @@ import { LoginService } from 'src/app/servicios/login.service';
 @Component({
   selector: 'app-cabecero',
   templateUrl: './cabecero.component.html',
-  styleUrls: ['./cabecero.component.css']
+  styleUrls: ['./cabecero.component.css'],
 })
 export class CabeceroComponent implements OnInit {
+  isLogged: boolean;
+  loggedInUser: string | null | undefined;
 
-  isLogged:boolean;
-  loggedInUser:string|null|undefined;
-
-
-  constructor(private loginService:LoginService,
-              private router:Router,
-              private changeDetectorRef:ChangeDetectorRef) {}
+  constructor(
+    private loginService: LoginService,
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    if(this.loginService.getUser()){
-      this.loginService.getUser().subscribe((user) => {this.loggedInUser = user?.email, this.isLogged = true});
-    } else {
-      this.isLogged = false;
-    }
+    this.loginService.getUser().subscribe((user) => {
+      if (user) {
+        (this.loggedInUser = user.email), (this.isLogged = user.email != null);
+      } else {
+        this.isLogged = false;
+      }
+    });
   }
 
-  logout(){
+  logout() {
     this.loginService.logout();
     this.isLogged = false;
-    this.changeDetectorRef.markForCheck();
     this.router.navigate(['/login']);
   }
-
 }
