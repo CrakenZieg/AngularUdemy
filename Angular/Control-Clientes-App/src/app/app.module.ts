@@ -19,6 +19,9 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { ClienteService } from './servicios/cliente.service';
 import { LoginService } from './servicios/login.service';
+import { LoginGuardianService } from './guardianes/auth.guard';
+import { ConfiguracionService } from './servicios/configuracion.service';
+import { ConfigGuardianService } from './guardianes/config.guard';
 
 @NgModule({
   declarations: [
@@ -41,7 +44,7 @@ import { LoginService } from './servicios/login.service';
     provideFirestore(() => getFirestore()),
     FormsModule
   ],
-  providers: [ClienteService,LoginService],
+  providers: [ClienteService,LoginService,LoginGuardianService,ConfiguracionService,ConfigGuardianService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

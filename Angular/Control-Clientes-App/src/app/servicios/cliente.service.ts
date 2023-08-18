@@ -31,17 +31,17 @@ export class ClienteService {
   }
 
   editarCliente(cliente:Cliente,id:string){
-    this.clienteDoc = doc(this.firestore,'clientes',id);
+    this.clienteDoc = doc(this.firestore,`clientes/${id}`);
     updateDoc(this.clienteDoc, {...cliente}).then(()=> {});
   }
 
   eliminarCliente(id:string){
-    this.clienteDoc = doc(this.firestore,'clientes',id);
+    this.clienteDoc = doc(this.firestore,`clientes/${id}`);
     deleteDoc(this.clienteDoc).then(()=> {});
   }
 
   getCliente(id:string){
-    this.clienteDoc = doc(this.firestore,'clientes',id);
+    this.clienteDoc = doc(this.firestore,`clientes/${id}`);
     return getDocFromServer(this.clienteDoc);
   }
 }

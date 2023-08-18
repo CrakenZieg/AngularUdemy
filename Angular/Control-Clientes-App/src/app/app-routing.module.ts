@@ -6,13 +6,15 @@ import { RegistroComponent } from './componentes/registro/registro.component';
 import { ConfiguracionComponent } from './componentes/configuracion/configuracion.component';
 import { EditarClienteComponent } from './componentes/editarCliente/editarCliente.component';
 import { NoEncontradoComponent } from './componentes/noEncontrado/noEncontrado.component';
+import { LoginGuardianService } from './guardianes/auth.guard';
+import { ConfigGuardianService } from './guardianes/config.guard';
 
 const routes: Routes = [
-  {path:'',component:TableroComponent},
+  {path:'',component:TableroComponent,canActivate:[LoginGuardianService]},
   {path:'login',component:LoginComponent},
-  {path:'registrarse',component:RegistroComponent},
-  {path:'configuracion',component:ConfiguracionComponent},
-  {path:'cliente/editar/:id',component:EditarClienteComponent},
+  {path:'registrarse',component:RegistroComponent, canActivate:[ConfigGuardianService]},
+  {path:'configuracion',component:ConfiguracionComponent,canActivate:[LoginGuardianService]},
+  {path:'cliente/editar/:id',component:EditarClienteComponent,canActivate:[LoginGuardianService]},
   {path:'*',component:NoEncontradoComponent},
 ];
 

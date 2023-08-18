@@ -1,6 +1,8 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/servicios/login.service';
+import { ConfiguracionService } from 'src/app/servicios/configuracion.service';
+import { Configuracion } from 'src/app/modelo/configuracion.model';
 
 @Component({
   selector: 'app-cabecero',
@@ -10,11 +12,12 @@ import { LoginService } from 'src/app/servicios/login.service';
 export class CabeceroComponent implements OnInit {
   isLogged: boolean;
   loggedInUser: string | null | undefined;
+  configuracion:Configuracion = {permitirRegistro:false,};
 
   constructor(
     private loginService: LoginService,
     private router: Router,
-    private changeDetectorRef: ChangeDetectorRef
+    private configuracionService:ConfiguracionService,
   ) {}
 
   ngOnInit() {
@@ -25,6 +28,9 @@ export class CabeceroComponent implements OnInit {
         this.isLogged = false;
       }
     });
+    this.configuracionService.getConfiguracion().subscribe((configuracion:Configuracion)=>{
+      this.configuracion = configuracion;
+    })
   }
 
   logout() {
